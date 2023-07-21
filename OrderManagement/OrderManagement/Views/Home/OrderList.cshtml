@@ -1,0 +1,77 @@
+﻿@model List<OrderManagement.Models.DB.ORDER>
+@{
+    ViewBag.Title = "OrderList";
+}
+
+
+<div id="content-wrapper" class="d-flex flex-column">
+
+    <!-- Main Content -->
+    <div id="content">
+
+
+        <!-- End of Topbar -->
+        <!-- Begin Page Content -->
+        <div class="container-fluid">
+
+            <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                <h1 class="h3 mb-0 text-gray-800"> Orders </h1>
+            </div>
+
+            <div class="row">
+                <div class="col">
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th scope="col">Date </th>
+                                <th scope="col">Qty</th>
+                                <th scope="col">Amount</th>
+                                <th scope="col">After GST</th>
+                                <th scope="col">Promocode</th>
+                                <th scope="col">Total Payable</th>
+                                <th scope="col">CGST</th>
+                                <th scope="col">SGST</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var x in Model)
+                            {
+                                <tr>
+                                    @{
+                                        DateTime date = x.OrderDate;
+                                    }
+                                    <td> @date.ToString("dd/MM/yyyy") </td>
+                                    <td> @x.ORDERITEMs.Sum(y => y.Qty) </td>
+                                    <td> @x.Total </td>
+                                    <td> @x.Total </td>
+                                    <td> @x.PromoCode </td>
+                                    <td> @x.TotalPayable </td>
+                                    <td> 5% </td>
+                                    <td> 5% </td>
+                                    <td> Details </td>
+                                </tr>
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Your Website 2021</span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+</div>
+
+

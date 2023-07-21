@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="4519ae3f0aea4a21bc5cf5f20cc4305a" Name="Diagram1">
+        <EntityTypeShape EntityType="AP351AteetMVCTestModel.ITEM" Width="1.5" PointX="0.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AP351AteetMVCTestModel.USER" Width="1.5" PointX="2.75" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="AP351AteetMVCTestModel.CouponCode" Width="1.5" PointX="3" PointY="4" />
+        <EntityTypeShape EntityType="AP351AteetMVCTestModel.CouponType" Width="1.5" PointX="0.75" PointY="4.625" />
+        <EntityTypeShape EntityType="AP351AteetMVCTestModel.ORDER" Width="1.5" PointX="5.375" PointY="2.5" />
+        <EntityTypeShape EntityType="AP351AteetMVCTestModel.ORDERITEM" Width="1.5" PointX="7.625" PointY="1.75" />
+        <AssociationConnector Association="AP351AteetMVCTestModel.FK__CouponCode__Type__2A4B4B5E" />
+        <AssociationConnector Association="AP351AteetMVCTestModel.FK__ORDER__PromoCode__300424B4" />
+        <AssociationConnector Association="AP351AteetMVCTestModel.FK__ORDERITEM__ItemI__32E0915F" />
+        <AssociationConnector Association="AP351AteetMVCTestModel.FK__ORDER__OrderBy__2E1BDC42" />
+        <AssociationConnector Association="AP351AteetMVCTestModel.FK__ORDERITEM__Order__33D4B598" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

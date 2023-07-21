@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="AP351AteetMVCTestModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="CouponCodes">
+          <Key>
+            <PropertyRef Name="CouponICoded" />
+          </Key>
+          <Property Name="CouponICoded" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Code" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="Type" Type="int" />
+          <Property Name="Flat" Type="int" />
+          <Property Name="Percentage" Type="int" />
+          <Property Name="Expirydate" Type="date" />
+          <Property Name="UsageLimit" Type="int" Nullable="false" />
+          <Property Name="IsActive" Type="bit" />
+        </EntityType>
+        <EntityType Name="CouponType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Amount" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="OrderBy" Type="int" />
+          <Property Name="OrderDate" Type="datetime" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="PromoCode" Type="int" />
+          <Property Name="TotalPayable" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="ORDERITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ItemID" Type="int" />
+          <Property Name="Qty" Type="int" Nullable="false" />
+          <Property Name="Total" Type="int" Nullable="false" />
+          <Property Name="OrderID" Type="int" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Username" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Password" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <Association Name="FK__CouponCode__Type__2A4B4B5E">
+          <End Role="CouponType" Type="Self.CouponType" Multiplicity="0..1" />
+          <End Role="CouponCodes" Type="Self.CouponCodes" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CouponType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CouponCodes">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER__OrderBy__2E1BDC42">
+          <End Role="USER" Type="Self.USER" Multiplicity="0..1" />
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="OrderBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER__PromoCode__300424B4">
+          <End Role="CouponCodes" Type="Self.CouponCodes" Multiplicity="0..1" />
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CouponCodes">
+              <PropertyRef Name="CouponICoded" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="PromoCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERITEM__ItemI__32E0915F">
+          <End Role="ITEM" Type="Self.ITEM" Multiplicity="0..1" />
+          <End Role="ORDERITEM" Type="Self.ORDERITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITEM">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERITEM">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERITEM__Order__33D4B598">
+          <End Role="ORDER" Type="Self.ORDER" Multiplicity="0..1" />
+          <End Role="ORDERITEM" Type="Self.ORDERITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERITEM">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="AP351AteetMVCTestModelStoreContainer">
+          <EntitySet Name="CouponCodes" EntityType="Self.CouponCodes" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="CouponType" EntityType="Self.CouponType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ITEM" EntityType="Self.ITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDER" EntityType="Self.ORDER" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="ORDERITEM" EntityType="Self.ORDERITEM" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="USER" EntityType="Self.USER" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK__CouponCode__Type__2A4B4B5E" Association="Self.FK__CouponCode__Type__2A4B4B5E">
+            <End Role="CouponType" EntitySet="CouponType" />
+            <End Role="CouponCodes" EntitySet="CouponCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER__OrderBy__2E1BDC42" Association="Self.FK__ORDER__OrderBy__2E1BDC42">
+            <End Role="USER" EntitySet="USER" />
+            <End Role="ORDER" EntitySet="ORDER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER__PromoCode__300424B4" Association="Self.FK__ORDER__PromoCode__300424B4">
+            <End Role="CouponCodes" EntitySet="CouponCodes" />
+            <End Role="ORDER" EntitySet="ORDER" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERITEM__ItemI__32E0915F" Association="Self.FK__ORDERITEM__ItemI__32E0915F">
+            <End Role="ITEM" EntitySet="ITEM" />
+            <End Role="ORDERITEM" EntitySet="ORDERITEM" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERITEM__Order__33D4B598" Association="Self.FK__ORDERITEM__Order__33D4B598">
+            <End Role="ORDER" EntitySet="ORDER" />
+            <End Role="ORDERITEM" EntitySet="ORDERITEM" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="AP351AteetMVCTestModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="ITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Amount" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ORDERITEMs" Relationship="AP351AteetMVCTestModel.FK__ORDERITEM__ItemI__32E0915F" FromRole="ITEM" ToRole="ORDERITEM" />
+        </EntityType>
+        <EntityType Name="USER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Username" Type="String" MaxLength="200" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="Password" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="ORDERs" Relationship="AP351AteetMVCTestModel.FK__ORDER__OrderBy__2E1BDC42" FromRole="USER" ToRole="ORDER" />
+        </EntityType>
+        <EntityContainer Name="AP351AteetMVCTestEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ITEMs" EntityType="Self.ITEM" />
+          <EntitySet Name="USERs" EntityType="Self.USER" />
+          <EntitySet Name="CouponCodes" EntityType="AP351AteetMVCTestModel.CouponCode" />
+          <EntitySet Name="CouponTypes" EntityType="AP351AteetMVCTestModel.CouponType" />
+          <EntitySet Name="ORDERs" EntityType="AP351AteetMVCTestModel.ORDER" />
+          <EntitySet Name="ORDERITEMs" EntityType="AP351AteetMVCTestModel.ORDERITEM" />
+          <AssociationSet Name="FK__CouponCode__Type__2A4B4B5E" Association="AP351AteetMVCTestModel.FK__CouponCode__Type__2A4B4B5E">
+            <End Role="CouponType" EntitySet="CouponTypes" />
+            <End Role="CouponCode" EntitySet="CouponCodes" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER__PromoCode__300424B4" Association="AP351AteetMVCTestModel.FK__ORDER__PromoCode__300424B4">
+            <End Role="CouponCode" EntitySet="CouponCodes" />
+            <End Role="ORDER" EntitySet="ORDERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERITEM__ItemI__32E0915F" Association="AP351AteetMVCTestModel.FK__ORDERITEM__ItemI__32E0915F">
+            <End Role="ITEM" EntitySet="ITEMs" />
+            <End Role="ORDERITEM" EntitySet="ORDERITEMs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDER__OrderBy__2E1BDC42" Association="AP351AteetMVCTestModel.FK__ORDER__OrderBy__2E1BDC42">
+            <End Role="USER" EntitySet="USERs" />
+            <End Role="ORDER" EntitySet="ORDERs" />
+          </AssociationSet>
+          <AssociationSet Name="FK__ORDERITEM__Order__33D4B598" Association="AP351AteetMVCTestModel.FK__ORDERITEM__Order__33D4B598">
+            <End Role="ORDER" EntitySet="ORDERs" />
+            <End Role="ORDERITEM" EntitySet="ORDERITEMs" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="CouponCode">
+          <Key>
+            <PropertyRef Name="CouponICoded" />
+          </Key>
+          <Property Name="CouponICoded" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Code" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="Type" Type="Int32" />
+          <Property Name="Flat" Type="Int32" />
+          <Property Name="Percentage" Type="Int32" />
+          <Property Name="Expirydate" Type="DateTime" Precision="0" />
+          <Property Name="UsageLimit" Type="Int32" Nullable="false" />
+          <Property Name="IsActive" Type="Boolean" />
+          <NavigationProperty Name="CouponType" Relationship="AP351AteetMVCTestModel.FK__CouponCode__Type__2A4B4B5E" FromRole="CouponCode" ToRole="CouponType" />
+          <NavigationProperty Name="ORDERs" Relationship="AP351AteetMVCTestModel.FK__ORDER__PromoCode__300424B4" FromRole="CouponCode" ToRole="ORDER" />
+        </EntityType>
+        <EntityType Name="CouponType">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="CouponCodes" Relationship="AP351AteetMVCTestModel.FK__CouponCode__Type__2A4B4B5E" FromRole="CouponType" ToRole="CouponCode" />
+        </EntityType>
+        <EntityType Name="ORDER">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="OrderBy" Type="Int32" />
+          <Property Name="OrderDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Total" Type="Int32" Nullable="false" />
+          <Property Name="PromoCode" Type="Int32" />
+          <Property Name="TotalPayable" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="CouponCode" Relationship="AP351AteetMVCTestModel.FK__ORDER__PromoCode__300424B4" FromRole="ORDER" ToRole="CouponCode" />
+          <NavigationProperty Name="USER" Relationship="AP351AteetMVCTestModel.FK__ORDER__OrderBy__2E1BDC42" FromRole="ORDER" ToRole="USER" />
+          <NavigationProperty Name="ORDERITEMs" Relationship="AP351AteetMVCTestModel.FK__ORDERITEM__Order__33D4B598" FromRole="ORDER" ToRole="ORDERITEM" />
+        </EntityType>
+        <EntityType Name="ORDERITEM">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ItemID" Type="Int32" />
+          <Property Name="Qty" Type="Int32" Nullable="false" />
+          <Property Name="Total" Type="Int32" Nullable="false" />
+          <Property Name="OrderID" Type="Int32" />
+          <NavigationProperty Name="ITEM" Relationship="AP351AteetMVCTestModel.FK__ORDERITEM__ItemI__32E0915F" FromRole="ORDERITEM" ToRole="ITEM" />
+          <NavigationProperty Name="ORDER" Relationship="AP351AteetMVCTestModel.FK__ORDERITEM__Order__33D4B598" FromRole="ORDERITEM" ToRole="ORDER" />
+        </EntityType>
+        <Association Name="FK__CouponCode__Type__2A4B4B5E">
+          <End Type="AP351AteetMVCTestModel.CouponType" Role="CouponType" Multiplicity="0..1" />
+          <End Type="AP351AteetMVCTestModel.CouponCode" Role="CouponCode" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CouponType">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="CouponCode">
+              <PropertyRef Name="Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER__PromoCode__300424B4">
+          <End Type="AP351AteetMVCTestModel.CouponCode" Role="CouponCode" Multiplicity="0..1" />
+          <End Type="AP351AteetMVCTestModel.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="CouponCode">
+              <PropertyRef Name="CouponICoded" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="PromoCode" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERITEM__ItemI__32E0915F">
+          <End Type="AP351AteetMVCTestModel.ITEM" Role="ITEM" Multiplicity="0..1" />
+          <End Type="AP351AteetMVCTestModel.ORDERITEM" Role="ORDERITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ITEM">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERITEM">
+              <PropertyRef Name="ItemID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDER__OrderBy__2E1BDC42">
+          <End Type="AP351AteetMVCTestModel.USER" Role="USER" Multiplicity="0..1" />
+          <End Type="AP351AteetMVCTestModel.ORDER" Role="ORDER" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="USER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDER">
+              <PropertyRef Name="OrderBy" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK__ORDERITEM__Order__33D4B598">
+          <End Type="AP351AteetMVCTestModel.ORDER" Role="ORDER" Multiplicity="0..1" />
+          <End Type="AP351AteetMVCTestModel.ORDERITEM" Role="ORDERITEM" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="ORDER">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="ORDERITEM">
+              <PropertyRef Name="OrderID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="AP351AteetMVCTestModelStoreContainer" CdmEntityContainer="AP351AteetMVCTestEntities">
+          <EntitySetMapping Name="ITEMs">
+            <EntityTypeMapping TypeName="AP351AteetMVCTestModel.ITEM">
+              <MappingFragment StoreEntitySet="ITEM">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="USERs">
+            <EntityTypeMapping TypeName="AP351AteetMVCTestModel.USER">
+              <MappingFragment StoreEntitySet="USER">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="Username" ColumnName="Username" />
+                <ScalarProperty Name="Password" ColumnName="Password" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CouponCodes">
+            <EntityTypeMapping TypeName="AP351AteetMVCTestModel.CouponCode">
+              <MappingFragment StoreEntitySet="CouponCodes">
+                <ScalarProperty Name="IsActive" ColumnName="IsActive" />
+                <ScalarProperty Name="UsageLimit" ColumnName="UsageLimit" />
+                <ScalarProperty Name="Expirydate" ColumnName="Expirydate" />
+                <ScalarProperty Name="Percentage" ColumnName="Percentage" />
+                <ScalarProperty Name="Flat" ColumnName="Flat" />
+                <ScalarProperty Name="Type" ColumnName="Type" />
+                <ScalarProperty Name="Code" ColumnName="Code" />
+                <ScalarProperty Name="CouponICoded" ColumnName="CouponICoded" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="CouponTypes">
+            <EntityTypeMapping TypeName="AP351AteetMVCTestModel.CouponType">
+              <MappingFragment StoreEntitySet="CouponType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERs">
+            <EntityTypeMapping TypeName="AP351AteetMVCTestModel.ORDER">
+              <MappingFragment StoreEntitySet="ORDER">
+                <ScalarProperty Name="TotalPayable" ColumnName="TotalPayable" />
+                <ScalarProperty Name="PromoCode" ColumnName="PromoCode" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="OrderDate" ColumnName="OrderDate" />
+                <ScalarProperty Name="OrderBy" ColumnName="OrderBy" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="ORDERITEMs">
+            <EntityTypeMapping TypeName="AP351AteetMVCTestModel.ORDERITEM">
+              <MappingFragment StoreEntitySet="ORDERITEM">
+                <ScalarProperty Name="OrderID" ColumnName="OrderID" />
+                <ScalarProperty Name="Total" ColumnName="Total" />
+                <ScalarProperty Name="Qty" ColumnName="Qty" />
+                <ScalarProperty Name="ItemID" ColumnName="ItemID" />
+                <ScalarProperty Name="ID" ColumnName="ID" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
